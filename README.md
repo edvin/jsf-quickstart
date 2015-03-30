@@ -59,18 +59,32 @@ The deployment descriptor `pom.xml` is preconfigured with two profiles:
 
 ### Going live
 
-Active the production profile to push your project to production:
+Activate the production profile to push your project to production:
 
     mvn clean wildfly:deploy
 
 ### Wildfly configuration
 
-To configure a new wildfly installation you need to add an administration user. This is the
-same information you will update in the pertinent profile section of `pom.xml`.
+To configure a new Wildfly installation you need to add an administration user.
 
 Add administration user to Wildfly:
 
     $WILDFLY_HOME/bin/add-user.sh admin secret
+
+Then configure your `pom.xml` to match:
+
+    <profile>
+        <id>production</id>
+        <properties>
+            <jsfProjectStage>Production</jsfProjectStage>
+            <libsassCache>true</libsassCache>
+            <libsassOutputStyle>compressed</libsassOutputStyle>
+            <wildflyHostname>my-server-hostname</wildflyHostname>
+            <wildflyPort>9990</wildflyPort>
+            <wildflyUsername>admin</wildflyUsername>
+            <wildflyPassword>secret</wildflyPassword>
+        </properties>
+    </profile>
 
 ### Custom app mountpoint
 
